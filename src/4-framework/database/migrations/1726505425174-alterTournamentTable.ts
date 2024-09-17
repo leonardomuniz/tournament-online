@@ -21,7 +21,7 @@ export class AlterTournamentTable1726505425174 implements MigrationInterface {
         `)
 
 		await queryRunner.query(`
-             ALTER TABLE "tournament" DROP COLUMN "owner";
+             ALTER TABLE "tournaments" DROP COLUMN "owner";
         `)
 	}
 }

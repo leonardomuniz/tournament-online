@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import type { MatchsDto, PlayerDto } from '../../../1-entity/dto/tournamentDto'
+import type { MatchsDto } from '../../../1-entity/dto/tournamentDto'
+import type { UserDto } from '../../../1-entity/dto/userDto'
 import { User } from './user'
 
 @Entity()
@@ -11,13 +12,16 @@ export class Tournament {
 	name!: string
 
 	@Column('jsonb')
-	players!: PlayerDto[]
+	players!: UserDto[]
 
 	@Column('jsonb')
 	matchs!: MatchsDto[]
 
 	@Column({ nullable: false })
 	rounds!: number
+
+	@Column()
+	active!: boolean
 
 	@ManyToOne(
 		() => User,

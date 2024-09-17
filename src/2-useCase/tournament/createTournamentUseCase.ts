@@ -31,7 +31,8 @@ export class CreateTournamentUseCase {
 
 			const response = await this.tournamentService.create({
 				...input,
-				owner: userExist
+				owner: userExist,
+				active: false
 			})
 			console.log('CreateTournamentUseCase :: create ::', response)
 
