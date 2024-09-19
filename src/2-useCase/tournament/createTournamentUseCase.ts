@@ -1,5 +1,4 @@
 import type { TournamentDto } from '../../1-entity/dto/tournamentDto'
-import type { UserDto } from '../../1-entity/dto/userDto'
 import { incorretNumberOfRounds, ownerNotFound, tournamentNeedsOwner } from '../../1-entity/errors/tournament'
 import type { iTournamentInterface } from '../../1-entity/interfaces/iTournamentService'
 import type { iUserInterface } from '../../1-entity/interfaces/iUserService'
@@ -14,11 +13,10 @@ export class CreateTournamentUseCase {
 		console.log('START CreateTournamentUseCase ::', input)
 
 		try {
-			const ownerInfo = await this.tournamentIsValid(input)
+			await this.validateTournament(input)
 
 			const response = await this.tournamentService.create({
 				...input,
-				owner: ownerInfo,
 				active: false
 			})
 			console.log('CreateTournamentUseCase :: create ::', response)
@@ -32,7 +30,7 @@ export class CreateTournamentUseCase {
 		}
 	}
 
-	private async tournamentIsValid(input: TournamentDto): Promise<UserDto | undefined> {
+	private async validateTournament(input: TournamentDto): Promise<boolean> {
 		if (!input) {
 			console.log('CreateTournamentUseCase :: error ::', tournamentNeedsOwner)
 
@@ -54,6 +52,6 @@ export class CreateTournamentUseCase {
 			throw incorretNumberOfRounds.message
 		}
 
-		return ownerFound
+		return true
 	}
 }
