@@ -45,19 +45,11 @@ export class CreateMatchTable1726586732157 implements MigrationInterface {
             ALTER TABLE "matchs" 
             ADD CONSTRAINT "FK_Match_Tournament"
             FOREIGN KEY ("tournament") REFERENCES "tournaments" ("id")
-            ON DELETE NO ACTION ON UPDATE NO ACTION
+            ON DELETE CASCADE ON UPDATE CASCADE;
         `)
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query(`
-            ALTER TABLE "matchs" DROP CONSTRAINT "FK_Match_Tournament";
-        `)
-
-		await queryRunner.query(`
-            ALTER TABLE "matchs" DROP COLUMN "tournaments";
-       `)
-
 		await queryRunner.dropTable('matchs')
 	}
 }

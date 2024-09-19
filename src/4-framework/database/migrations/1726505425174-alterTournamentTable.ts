@@ -11,7 +11,7 @@ export class AlterTournamentTable1726505425174 implements MigrationInterface {
             ALTER TABLE "tournaments" 
             ADD CONSTRAINT "FK_Tournament_User"
             FOREIGN KEY ("ownerId") REFERENCES "users" ("id")
-            ON DELETE NO ACTION ON UPDATE NO ACTION
+            ON DELETE CASCADE ON UPDATE CASCADE;
         `)
 	}
 

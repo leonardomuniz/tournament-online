@@ -11,7 +11,7 @@ export class AddActiveInTournamentsTable1726580733410 implements MigrationInterf
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
             ALTER TABLE "tournaments" DROP COLUMN "active"
-			ON DELETE NO ACTION ON UPDATE NO ACTION
+			ON DELETE CASCADE ON UPDATE CASCADE;
        `)
 	}
 }
