@@ -31,13 +31,16 @@ export class CreateTournamentUseCase {
 	}
 
 	private async validateTournament(input: TournamentDto): Promise<boolean> {
-		if (!input) {
+		console.log('CreateTournamentUseCase :: validateTournament ::', input)
+
+		const owner: string = input.ownerId
+		if (!owner) {
 			console.log('CreateTournamentUseCase :: error ::', tournamentNeedsOwner)
 
 			throw tournamentNeedsOwner.message
 		}
 
-		const ownerFound = await this.userService.findOne(input.ownerId)
+		const ownerFound = await this.userService.findOne(owner)
 		console.log('CreateTournamentUseCase :: find owner ::', ownerFound)
 
 		if (!ownerFound) {

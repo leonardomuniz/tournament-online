@@ -28,7 +28,19 @@ export class UserService implements iUserInterface {
 	}
 
 	async findOne(userId: string): Promise<UserDto | null> {
-		return this.userRepository.findOneBy({ id: userId })
+		console.log('START UserService :: findOne ::', userId)
+
+		try {
+			const response = await this.userRepository.findOneBy({ id: userId })
+			console.log('UserService :: findOne ::', response)
+
+			console.log('FINISH UserService :: findOne')
+			return response
+		} catch (error) {
+			console.log('UserService :: findOne ::', error)
+
+			throw error
+		}
 	}
 
 	async update(userId: string, input: UserDto): Promise<boolean> {
