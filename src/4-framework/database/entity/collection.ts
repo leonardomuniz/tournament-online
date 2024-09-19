@@ -1,4 +1,5 @@
-import { Tournament } from './tournament'
-import { User } from './user'
+import { Matchs } from './match'
+import { Tournaments } from './tournament'
+import { Users } from './user'
 
-export const entityCollection = [User, Tournament]
+export const entityCollection = [Users, Tournaments, Matchs]

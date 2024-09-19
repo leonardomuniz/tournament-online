@@ -1,10 +1,10 @@
 import type { UserDto } from '../../1-entity/dto/userDto'
 import type { iUserInterface } from '../../1-entity/interfaces/iUserService'
 import { AppDataSource } from '../database/data-source'
-import { User } from '../database/entity/user'
+import { Users } from '../database/entity/user'
 
 export class UserService implements iUserInterface {
-	private userRepository = AppDataSource.getRepository(User)
+	private userRepository = AppDataSource.getRepository(Users)
 
 	async findAll(): Promise<UserDto[]> {
 		return await this.userRepository.find()

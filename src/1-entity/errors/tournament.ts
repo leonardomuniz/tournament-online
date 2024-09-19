@@ -1,6 +1,6 @@
 export const ownerNotFound = {
 	code: 'TRN-001',
-	message: 'owner do not found'
+	message: 'Owner do not found'
 }
 
 export const incorretNumberOfRounds = {
@@ -10,5 +10,5 @@ export const incorretNumberOfRounds = {
 
 export const tournamentNotFound = {
 	code: 'TRN-002',
-	message: 'tournament do not found'
+	message: 'Tournament do not found'
 }

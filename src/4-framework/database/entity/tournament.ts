@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import type { MatchsDto } from '../../../1-entity/dto/tournamentDto'
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import type { UserDto } from '../../../1-entity/dto/userDto'
-import { User } from './user'
+import { Matchs } from './match'
+import { Users } from './user'
 
 @Entity()
-export class Tournament {
+export class Tournaments {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string
 
@@ -14,20 +14,23 @@ export class Tournament {
 	@Column('jsonb')
 	players!: UserDto[]
 
-	@Column('jsonb')
-	matchs!: MatchsDto[]
+	@OneToMany(
+		() => Matchs,
+		(matchs) => matchs.tournament
+	)
+	matchs?: Matchs[]
 
 	@Column({ nullable: false })
 	rounds!: number
 
-	@Column()
+	@Column({ nullable: false })
 	active!: boolean
 
 	@ManyToOne(
-		() => User,
-		(user) => user.tournaments
+		() => Users,
+		(users) => users.tournaments
 	)
-	owner!: User
+	owner!: Users
 
 	@Column({ nullable: false })
 	dateAndHour!: Date

@@ -1,10 +1,10 @@
 import type { TournamentDto } from '../../1-entity/dto/tournamentDto'
 import type { iTournamentInterface } from '../../1-entity/interfaces/iTournamentService'
 import { AppDataSource } from '../database/data-source'
-import { Tournament } from '../database/entity/tournament'
+import { Tournaments } from '../database/entity/tournament'
 
 export class TournamentService implements iTournamentInterface {
-	private tournamentRepository = AppDataSource.getRepository(Tournament)
+	private tournamentRepository = AppDataSource.getRepository(Tournaments)
 
 	async findAll(): Promise<TournamentDto[]> {
 		return await this.tournamentRepository.find({

@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Tournament } from './tournament'
+import { Tournaments } from './tournament'
 
 @Entity()
-export class User {
+export class Users {
 	@PrimaryGeneratedColumn('uuid')
 	id!: string
 
@@ -16,10 +16,10 @@ export class User {
 	password!: string
 
 	@OneToMany(
-		() => Tournament,
-		(tournament) => tournament.owner
+		() => Tournaments,
+		(tournaments) => tournaments.owner
 	)
-	tournaments?: Tournament[]
+	tournaments?: Tournaments[]
 
 	@CreateDateColumn({ name: 'created_at' })
 	createdAt?: Date

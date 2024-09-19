@@ -19,7 +19,7 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"lineWidth": 300,
+		"lineWidth": 200,
 		"lineEnding": "lf",
 		"indentWidth": 2
 	}
