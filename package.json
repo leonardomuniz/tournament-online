@@ -5,7 +5,9 @@
   "scripts": {
     "test:unit": "jest --selectProjects=unit",
     "start:dev": "ts-node-dev src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
+    "typeorm migration:run": "ts-node-dev ./node_modules/typeorm/cli.js -- -d src/4-framework/database/data-source.ts migration:run",
+    "typeorm migration:revert": "ts-node-dev ./node_modules/typeorm/cli.js -- -d src/4-framework/database/data-source.ts migration:revert"
   },
   "keywords": [],
   "author": "",
