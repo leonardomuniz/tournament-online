@@ -9,6 +9,11 @@ export const incorretNumberOfRounds = {
 }
 
 export const tournamentNotFound = {
-	code: 'TRN-002',
+	code: 'TRN-003',
 	message: 'Tournament do not found'
+}
+
+export const tournamentNeedsOwner = {
+	code: 'TRN-004',
+	message: 'Tournament need an owner to be created'
 }

@@ -7,7 +7,8 @@ export interface TournamentDto {
 	matchs?: MatchsDto[]
 	rounds: number
 	active: boolean
-	owner: UserDto
+	ownerId: string
+	owner?: UserDto
 	dateAndHour: Date
 	createdAt?: Date
 	updateAt?: Date

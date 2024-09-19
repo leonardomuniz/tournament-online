@@ -1,17 +1,17 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class AddActiveInTournamentsTable1726580733410 implements MigrationInterface {
+export class AddingOwnerToTournamentTable1726753158867 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
             ALTER TABLE "tournaments"
-            ADD COLUMN "active" boolean;
+            ADD COLUMN "owner" jsonb;
         `)
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
-            ALTER TABLE "tournaments" DROP COLUMN "active"
-			ON DELETE NO ACTION ON UPDATE NO ACTION
+            ALTER TABLE "tournaments" DROP COLUMN "owner"
+			ON DELETE NO ACTION ON UPDATE NO ACTION;
        `)
 	}
 }

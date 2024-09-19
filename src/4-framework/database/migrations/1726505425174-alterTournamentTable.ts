@@ -4,13 +4,13 @@ export class AlterTournamentTable1726505425174 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
             ALTER TABLE "tournaments"
-            ADD COLUMN "owner" varchar;
+            ADD COLUMN "ownerId" varchar;
         `)
 
 		await queryRunner.query(`
             ALTER TABLE "tournaments" 
             ADD CONSTRAINT "FK_Tournament_User"
-            FOREIGN KEY ("owner") REFERENCES "users" ("id")
+            FOREIGN KEY ("ownerId") REFERENCES "users" ("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `)
 	}
@@ -21,7 +21,7 @@ export class AlterTournamentTable1726505425174 implements MigrationInterface {
         `)
 
 		await queryRunner.query(`
-             ALTER TABLE "tournaments" DROP COLUMN "owner";
+             ALTER TABLE "tournaments" DROP COLUMN "ownerId";
         `)
 	}
 }

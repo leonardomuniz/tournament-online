@@ -26,11 +26,14 @@ export class Tournaments {
 	@Column({ nullable: false })
 	active!: boolean
 
+	@Column({ nullable: false })
+	ownerId!: string
+
 	@ManyToOne(
 		() => Users,
 		(users) => users.tournaments
 	)
-	owner!: Users
+	owner?: Users
 
 	@Column({ nullable: false })
 	dateAndHour!: Date
