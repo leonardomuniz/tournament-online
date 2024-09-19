@@ -23,7 +23,7 @@ export class CreateMatchTable1726586732157 implements MigrationInterface {
 						isNullable: false
 					},
 					{
-						name: 'tournament',
+						name: 'tournamentId',
 						type: 'varchar',
 						isNullable: false
 					},
@@ -44,7 +44,7 @@ export class CreateMatchTable1726586732157 implements MigrationInterface {
 		await queryRunner.query(`
             ALTER TABLE "matchs" 
             ADD CONSTRAINT "FK_Match_Tournament"
-            FOREIGN KEY ("tournament") REFERENCES "tournaments" ("id")
+            FOREIGN KEY ("tournamentId") REFERENCES "tournaments" ("id")
             ON DELETE CASCADE ON UPDATE CASCADE;
         `)
 	}

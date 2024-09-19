@@ -10,11 +10,14 @@ export class Matchs {
 	@Column({ nullable: false })
 	round!: number
 
+	@Column({ nullable: false })
+	tournamentId!: string
+
 	@ManyToOne(
 		() => Tournaments,
 		(tournaments) => tournaments.matchs
 	)
-	tournament!: Tournaments
+	tournament?: Tournaments
 
 	@Column('jsonb')
 	matchs!: Match[]

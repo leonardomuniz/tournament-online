@@ -17,7 +17,8 @@ export interface TournamentDto {
 export interface MatchsDto {
 	id: string
 	round: number
-	tournament: TournamentDto
+	tournamentId: string
+	tournament?: TournamentDto
 	matchs: Match[]
 	createdAt?: Date
 	updateAt?: Date
