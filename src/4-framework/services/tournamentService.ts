@@ -9,12 +9,14 @@ export class TournamentService implements iTournamentInterface {
 	async findAll(): Promise<TournamentDto[]> {
 		return await this.tournamentRepository.find({
 			relations: {
-				owner: true
+				owner: true,
+				matchs: true,
+				players: true
 			}
 		})
 	}
 
-	async create(input: TournamentDto): Promise<boolean> {
+	async create(input: TournamentDto): Promise<TournamentDto> {
 		console.log('START TournamentService :: create ::', input)
 		try {
 			const tournament = this.tournamentRepository.create(input)
@@ -24,7 +26,7 @@ export class TournamentService implements iTournamentInterface {
 			console.log('TournamentService :: save ::', response)
 
 			console.log('FINISH TournamentService :: create')
-			return true
+			return response
 		} catch (error) {
 			console.log('TournamentService :: create ::', error)
 
@@ -34,7 +36,10 @@ export class TournamentService implements iTournamentInterface {
 	async findOne(tournamentId: string): Promise<TournamentDto | null> {
 		return this.tournamentRepository.findOne({
 			where: { id: tournamentId },
-			relations: { owner: true }
+			relations: {
+				owner: true,
+				matchs: true
+			}
 		})
 	}
 	async update(tournamentId: string, input: TournamentDto): Promise<boolean> {

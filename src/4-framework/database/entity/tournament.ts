@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import type { UserDto } from '../../../1-entity/dto/userDto'
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import type { LobbyDto } from '../../../1-entity/dto/lobbyDto'
+import { Lobbies } from './lobby'
 import { Matchs } from './match'
 import { Users } from './user'
 
@@ -11,8 +12,11 @@ export class Tournaments {
 	@Column({ length: 100, nullable: false })
 	name!: string
 
-	@Column('jsonb')
-	players!: UserDto[]
+	@OneToOne(
+		() => Lobbies,
+		(lobby) => lobby.tournament
+	)
+	players?: LobbyDto
 
 	@OneToMany(
 		() => Matchs,

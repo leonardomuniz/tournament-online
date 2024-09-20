@@ -6,7 +6,7 @@ import { Lobbies } from '../database/entity/lobby'
 export class LobbyService implements iLobbyService {
 	private lobbyRepository = AppDataSource.getRepository(Lobbies)
 
-	async create(input: LobbyDto): Promise<boolean> {
+	async create(input: LobbyDto): Promise<LobbyDto> {
 		console.log('START LobbyService :: create ::', input)
 		try {
 			const tournament = this.lobbyRepository.create(input)
@@ -16,7 +16,7 @@ export class LobbyService implements iLobbyService {
 			console.log('LobbyService :: save ::', response)
 
 			console.log('FINISH LobbyService :: create')
-			return true
+			return response
 		} catch (error) {
 			console.log('LobbyService :: create ::', error)
 

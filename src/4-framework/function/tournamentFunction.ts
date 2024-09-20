@@ -4,6 +4,7 @@ import { deleteTournamentUseCase } from '../../2-useCase/tournament/deleteTourna
 import { findAllTournamentUseCase } from '../../2-useCase/tournament/findAllTournamentUseCase'
 import { findOneTournamentUseCase } from '../../2-useCase/tournament/findOneTournamentUseCase'
 import { UpdateTournamentUseCase } from '../../2-useCase/tournament/updateTournamentUseCase'
+import { LobbyService } from '../services/lobbyService'
 import { TournamentService } from '../services/tournamentService'
 import { UserService } from '../services/userService'
 
@@ -11,8 +12,9 @@ export const tournamentRouter = Router()
 
 const tournamentService = new TournamentService()
 const userService = new UserService()
+const lobbyService = new LobbyService()
 
-const createTournament = new CreateTournamentUseCase(tournamentService, userService)
+const createTournament = new CreateTournamentUseCase(tournamentService, userService, lobbyService)
 const findAllTournament = new findAllTournamentUseCase(tournamentService)
 const findOneTournament = new findOneTournamentUseCase(tournamentService)
 const updateTournament = new UpdateTournamentUseCase(tournamentService)

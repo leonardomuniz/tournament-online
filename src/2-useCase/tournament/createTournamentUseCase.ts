@@ -1,12 +1,14 @@
 import type { TournamentDto } from '../../1-entity/dto/tournamentDto'
 import { incorretNumberOfRounds, ownerNotFound, tournamentNeedsOwner } from '../../1-entity/errors/tournament'
+import type { iLobbyService } from '../../1-entity/interfaces/iLobbyService'
 import type { iTournamentInterface } from '../../1-entity/interfaces/iTournamentService'
 import type { iUserInterface } from '../../1-entity/interfaces/iUserService'
 
 export class CreateTournamentUseCase {
 	constructor(
 		private tournamentService: iTournamentInterface,
-		private userService: iUserInterface
+		private userService: iUserInterface,
+		private lobbyService: iLobbyService
 	) {}
 
 	async run(input: TournamentDto): Promise<boolean> {
@@ -15,11 +17,17 @@ export class CreateTournamentUseCase {
 		try {
 			await this.validateTournament(input)
 
-			const response = await this.tournamentService.create({
+			const tournamentCreateResponse = await this.tournamentService.create({
 				...input,
 				active: false
 			})
-			console.log('CreateTournamentUseCase :: create ::', response)
+			console.log('CreateTournamentUseCase :: create ::', tournamentCreateResponse)
+
+			const lobbyCreateResponse = await this.lobbyService.create({
+				players: [],
+				tournamentId: tournamentCreateResponse.id
+			})
+			console.log('CreateTournamentUseCase :: lobbyService :: create ::', lobbyCreateResponse)
 
 			console.log('FINISH CreateTournamentUseCase')
 			return true
@@ -41,7 +49,7 @@ export class CreateTournamentUseCase {
 		}
 
 		const ownerFound = await this.userService.findOne(owner)
-		console.log('CreateTournamentUseCase :: find owner ::', ownerFound)
+		console.log('CreateTournamentUseCase :: userService :: find owner ::', ownerFound)
 
 		if (!ownerFound) {
 			console.log('CreateTournamentUseCase :: error ::', ownerNotFound)

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import type { UserDto } from '../../../1-entity/dto/userDto'
 import { Tournaments } from './tournament'
 
@@ -8,15 +8,13 @@ export class Lobbies {
 	id!: string
 
 	@Column('jsonb')
-	players!: UserDto[]
+	players?: UserDto[]
 
 	@Column({ nullable: false })
 	tournamentId!: string
 
-	@ManyToOne(
-		() => Tournaments,
-		(tournaments) => tournaments.players
-	)
+	@OneToOne(() => Tournaments)
+	@JoinColumn()
 	tournament?: Tournaments
 
 	@CreateDateColumn({ name: 'created_at' })
