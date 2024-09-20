@@ -3,7 +3,7 @@ import type { UserDto } from './userDto'
 
 export interface LobbyDto {
 	players?: UserDto[]
-	tournamentId: string
+	tournamentId?: string
 	tournament?: TournamentDto
 	createdAt?: Date
 	updateAt?: Date

@@ -11,7 +11,7 @@ export class Lobbies {
 	players?: UserDto[]
 
 	@Column({ nullable: false })
-	tournamentId!: string
+	tournamentId?: string
 
 	@OneToOne(() => Tournaments)
 	@JoinColumn()

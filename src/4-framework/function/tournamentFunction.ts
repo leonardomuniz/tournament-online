@@ -38,7 +38,7 @@ tournamentRouter.get('/:tournamentId', async (request: Request, response: Respon
 
 tournamentRouter.put('/:tournamentId', async (request: Request, response: Response): Promise<Response> => {
 	try {
-		return response.status(200).json(await updateTournament.run(request.params.userId, request.body))
+		return response.status(200).json(await updateTournament.run(request.params.tournamentId, request.body))
 	} catch (error) {
 		return response.status(400).json({ message: error })
 	}

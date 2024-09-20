@@ -33,6 +33,7 @@ export class TournamentService implements iTournamentInterface {
 			throw error
 		}
 	}
+
 	async findOne(tournamentId: string): Promise<TournamentDto | null> {
 		return this.tournamentRepository.findOne({
 			where: { id: tournamentId },
@@ -42,6 +43,7 @@ export class TournamentService implements iTournamentInterface {
 			}
 		})
 	}
+
 	async update(tournamentId: string, input: TournamentDto): Promise<boolean> {
 		console.log('START TournamentService :: update ::', input)
 		try {

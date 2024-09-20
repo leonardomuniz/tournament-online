@@ -1,6 +1,6 @@
 import type { TournamentDto } from '../../1-entity/dto/tournamentDto'
 import { incorretNumberOfRounds, ownerNotFound, tournamentNeedsOwner } from '../../1-entity/errors/tournament'
-import type { iLobbyService } from '../../1-entity/interfaces/iLobbyService'
+import type { iLobbyInterface } from '../../1-entity/interfaces/iLobbyService'
 import type { iTournamentInterface } from '../../1-entity/interfaces/iTournamentService'
 import type { iUserInterface } from '../../1-entity/interfaces/iUserService'
 
@@ -8,7 +8,7 @@ export class CreateTournamentUseCase {
 	constructor(
 		private tournamentService: iTournamentInterface,
 		private userService: iUserInterface,
-		private lobbyService: iLobbyService
+		private lobbyService: iLobbyInterface
 	) {}
 
 	async run(input: TournamentDto): Promise<boolean> {
