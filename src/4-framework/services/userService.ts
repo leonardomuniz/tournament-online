@@ -7,7 +7,15 @@ export class UserService implements iUserInterface {
 	private userRepository = AppDataSource.getRepository(Users)
 
 	async findAll(): Promise<UserDto[]> {
-		return await this.userRepository.find()
+		console.log('START UserService :: findAll')
+
+		const response = await this.userRepository.find({
+			relations: { tournaments: true }
+		})
+		console.log('UserService :: find ::', response)
+
+		console.log('FINISH UserService :: findAll')
+		return response
 	}
 
 	async create(input: UserDto): Promise<boolean> {
@@ -31,7 +39,10 @@ export class UserService implements iUserInterface {
 		console.log('START UserService :: findOne ::', userId)
 
 		try {
-			const response = await this.userRepository.findOneBy({ id: userId })
+			const response = await this.userRepository.findOne({
+				where: { id: userId },
+				relations: { tournaments: true }
+			})
 			console.log('UserService :: findOne ::', response)
 
 			console.log('FINISH UserService :: findOne')
