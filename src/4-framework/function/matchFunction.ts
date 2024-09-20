@@ -1,5 +1,5 @@
 import Router, { type Request, type Response } from 'express'
-import { CreateMatchUseCase } from '../../2-useCase/match/createMatchUseCase'
+import { CreateMatchUseCase } from '../../2-useCase/tournament/match/createMatchUseCase'
 import { MatchService } from '../services/matchService'
 import { TournamentService } from '../services/tournamentService'
 
