@@ -1,8 +1,17 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import type { LobbyDto } from '../../../1-entity/dto/lobbyDto'
-import { Lobbies } from './lobby'
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, type ValueTransformer } from 'typeorm'
+import type { Players } from '../../../1-entity/dto/tournamentDto'
 import { Matchs } from './match'
 import { Users } from './user'
+
+class PlayersTransformer implements ValueTransformer {
+	to(value: Players[]): string {
+		return JSON.stringify(value)
+	}
+
+	from(value: string): Players[] {
+		return JSON.parse(value)
+	}
+}
 
 @Entity()
 export class Tournaments {
@@ -12,11 +21,8 @@ export class Tournaments {
 	@Column({ length: 100, nullable: false })
 	name!: string
 
-	@OneToOne(
-		() => Lobbies,
-		(lobby) => lobby.tournament
-	)
-	players?: LobbyDto
+	@Column({ type: 'json', transformer: new PlayersTransformer() })
+	players?: Players[]
 
 	@OneToMany(
 		() => Matchs,

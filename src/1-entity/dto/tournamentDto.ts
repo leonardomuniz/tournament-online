@@ -1,10 +1,9 @@
-import type { LobbyDto } from './lobbyDto'
 import type { UserDto } from './userDto'
 
 export interface TournamentDto {
 	id: string
 	name: string
-	players?: LobbyDto
+	players?: Players[]
 	matchs?: MatchsDto[]
 	rounds: number
 	active: boolean
@@ -29,4 +28,9 @@ export interface Match {
 	player: number
 	challenger: number
 	winner: number | null
+}
+
+export interface Players {
+	player: UserDto
+	confirmed: boolean
 }

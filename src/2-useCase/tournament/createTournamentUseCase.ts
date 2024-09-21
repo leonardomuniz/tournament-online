@@ -1,14 +1,12 @@
 import type { TournamentDto } from '../../1-entity/dto/tournamentDto'
 import { incorretNumberOfRounds, ownerNotFound, tournamentNeedsOwner } from '../../1-entity/errors/tournament'
-import type { iLobbyInterface } from '../../1-entity/interfaces/iLobbyService'
 import type { iTournamentInterface } from '../../1-entity/interfaces/iTournamentService'
 import type { iUserInterface } from '../../1-entity/interfaces/iUserService'
 
 export class CreateTournamentUseCase {
 	constructor(
 		private tournamentService: iTournamentInterface,
-		private userService: iUserInterface,
-		private lobbyService: iLobbyInterface
+		private userService: iUserInterface
 	) {}
 
 	async run(input: TournamentDto): Promise<boolean> {
@@ -18,8 +16,6 @@ export class CreateTournamentUseCase {
 			await this.validateTournament(input)
 
 			const tournamentResponse = await this.createTournament(input, false)
-
-			await this.createLobby(tournamentResponse.id)
 
 			console.log('FINISH CreateTournamentUseCase')
 			return true
@@ -59,17 +55,9 @@ export class CreateTournamentUseCase {
 	}
 
 	private async createTournament(input: TournamentDto, active: boolean): Promise<TournamentDto> {
-		const tournamentCreateResponse = await this.tournamentService.create({ ...input, active })
+		const tournamentCreateResponse = await this.tournamentService.create({ ...input, active, players: [] })
 		console.log('CreateTournamentUseCase :: create ::', tournamentCreateResponse)
 
 		return tournamentCreateResponse
-	}
-
-	private async createLobby(tournamentId: string): Promise<void> {
-		const lobbyCreateResponse = await this.lobbyService.create({
-			players: [],
-			tournamentId: tournamentId
-		})
-		console.log('CreateTournamentUseCase :: lobbyService :: create ::', lobbyCreateResponse)
 	}
 }
