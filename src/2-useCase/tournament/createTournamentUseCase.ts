@@ -17,17 +17,9 @@ export class CreateTournamentUseCase {
 		try {
 			await this.validateTournament(input)
 
-			const tournamentCreateResponse = await this.tournamentService.create({
-				...input,
-				active: false
-			})
-			console.log('CreateTournamentUseCase :: create ::', tournamentCreateResponse)
+			const tournamentResponse = await this.createTournament(input, false)
 
-			const lobbyCreateResponse = await this.lobbyService.create({
-				players: [],
-				tournamentId: tournamentCreateResponse.id
-			})
-			console.log('CreateTournamentUseCase :: lobbyService :: create ::', lobbyCreateResponse)
+			await this.createLobby(tournamentResponse.id)
 
 			console.log('FINISH CreateTournamentUseCase')
 			return true
@@ -64,5 +56,20 @@ export class CreateTournamentUseCase {
 		}
 
 		return true
+	}
+
+	private async createTournament(input: TournamentDto, active: boolean): Promise<TournamentDto> {
+		const tournamentCreateResponse = await this.tournamentService.create({ ...input, active })
+		console.log('CreateTournamentUseCase :: create ::', tournamentCreateResponse)
+
+		return tournamentCreateResponse
+	}
+
+	private async createLobby(tournamentId: string): Promise<void> {
+		const lobbyCreateResponse = await this.lobbyService.create({
+			players: [],
+			tournamentId: tournamentId
+		})
+		console.log('CreateTournamentUseCase :: lobbyService :: create ::', lobbyCreateResponse)
 	}
 }
