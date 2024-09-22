@@ -1,4 +1,4 @@
-import type { MatchsDto } from '../../../1-entity/dto/tournamentDto'
+import type { MatchsDto } from '../../../1-entity/dto/matchsDto'
 import { tournamentNotFound } from '../../../1-entity/errors/tournament'
 import type { iMatchInterface } from '../../../1-entity/interfaces/iMatchService'
 import type { iTournamentInterface } from '../../../1-entity/interfaces/iTournamentService'

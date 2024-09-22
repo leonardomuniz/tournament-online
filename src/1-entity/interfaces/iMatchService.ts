@@ -1,4 +1,4 @@
-import type { MatchsDto } from '../dto/tournamentDto'
+import type { MatchsDto } from '../dto/matchsDto'
 
 export interface iMatchInterface {
 	create(input: MatchsDto): Promise<boolean>

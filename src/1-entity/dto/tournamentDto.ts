@@ -1,3 +1,4 @@
+import type { MatchsDto } from './matchsDto'
 import type { UserDto } from './userDto'
 
 export interface TournamentDto {
@@ -12,22 +13,6 @@ export interface TournamentDto {
 	dateAndHour: Date
 	createdAt?: Date
 	updateAt?: Date
-}
-
-export interface MatchsDto {
-	id: string
-	round: number
-	tournamentId: string
-	tournament?: TournamentDto
-	matchs: Match[]
-	createdAt?: Date
-	updateAt?: Date
-}
-
-export interface Match {
-	player: number
-	challenger: number
-	winner: number | null
 }
 
 export interface Players {
