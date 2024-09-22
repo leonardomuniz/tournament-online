@@ -1,11 +1,11 @@
-import type { MatchsDto } from './matchsDto'
+import type { MatchsDto } from './matchDto'
 import type { UserDto } from './userDto'
 
 export interface TournamentDto {
 	id: string
 	name: string
-	players?: Players[]
-	matchs?: MatchsDto[]
+	players: TournamentPlayers[]
+	matchs: MatchsDto[]
 	rounds: number
 	active: boolean
 	ownerId: string
@@ -15,7 +15,12 @@ export interface TournamentDto {
 	updateAt?: Date
 }
 
-export interface Players {
-	player: UserDto
+export interface TournamentPlayers {
+	player: Player
 	confirmed: boolean
+}
+
+interface Player {
+	id?: string
+	name: string
 }

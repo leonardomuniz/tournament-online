@@ -9,9 +9,7 @@ export class TournamentService implements iTournamentInterface {
 	async findAll(): Promise<TournamentDto[]> {
 		return await this.tournamentRepository.find({
 			relations: {
-				owner: true,
-				matchs: true,
-				players: true
+				owner: true
 			}
 		})
 	}
@@ -38,8 +36,7 @@ export class TournamentService implements iTournamentInterface {
 		return this.tournamentRepository.findOne({
 			where: { id: tournamentId },
 			relations: {
-				owner: true,
-				matchs: true
+				owner: true
 			}
 		})
 	}

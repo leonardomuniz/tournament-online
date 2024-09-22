@@ -1,17 +1,7 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, type ValueTransformer } from 'typeorm'
-import type { Players } from '../../../1-entity/dto/tournamentDto'
-import { Matchs } from './match'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import type { MatchsDto } from '../../../1-entity/dto/matchDto'
+import type { TournamentPlayers } from '../../../1-entity/dto/tournamentDto'
 import { Users } from './user'
-
-class PlayersTransformer implements ValueTransformer {
-	to(value: Players[]): string {
-		return JSON.stringify(value)
-	}
-
-	from(value: string): Players[] {
-		return JSON.parse(value)
-	}
-}
 
 @Entity()
 export class Tournaments {
@@ -21,19 +11,16 @@ export class Tournaments {
 	@Column({ length: 100, nullable: false })
 	name!: string
 
-	@Column({ type: 'json', transformer: new PlayersTransformer() })
-	players?: Players[]
+	@Column({ type: 'jsonb', nullable: true })
+	players!: TournamentPlayers[]
 
-	@OneToMany(
-		() => Matchs,
-		(matchs) => matchs.tournament
-	)
-	matchs?: Matchs[]
+	@Column({ type: 'jsonb', nullable: true })
+	matchs!: MatchsDto[]
 
 	@Column({ nullable: false })
 	rounds!: number
 
-	@Column({ nullable: false })
+	@Column({ default: false })
 	active!: boolean
 
 	@Column({ nullable: false })

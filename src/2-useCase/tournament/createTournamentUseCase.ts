@@ -55,7 +55,12 @@ export class CreateTournamentUseCase {
 	}
 
 	private async createTournament(input: TournamentDto, active: boolean): Promise<TournamentDto> {
-		const tournamentCreateResponse = await this.tournamentService.create({ ...input, active, players: [] })
+		const tournamentCreateResponse = await this.tournamentService.create({
+			...input,
+			active,
+			players: [],
+			matchs: []
+		})
 		console.log('CreateTournamentUseCase :: create ::', tournamentCreateResponse)
 
 		return tournamentCreateResponse
