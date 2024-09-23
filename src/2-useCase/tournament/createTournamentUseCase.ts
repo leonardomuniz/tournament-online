@@ -15,7 +15,8 @@ export class CreateTournamentUseCase {
 		try {
 			await this.validateTournament(input)
 
-			const tournamentResponse = await this.createTournament(input, false)
+			const response = await this.createTournament(input, false)
+			console.log('CreateTournamentUseCase :: createTournament :: response ::', response)
 
 			console.log('FINISH CreateTournamentUseCase')
 			return true

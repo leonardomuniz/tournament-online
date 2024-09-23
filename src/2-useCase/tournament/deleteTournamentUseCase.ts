@@ -4,20 +4,13 @@ import type { iTournamentInterface } from '../../1-entity/interfaces/iTournament
 export class deleteTournamentUseCase {
 	constructor(private tournamentService: iTournamentInterface) {}
 
-	async run(userId: string): Promise<boolean> {
-		console.log('START deleteTournamentUseCase ::', userId)
+	async run(tournamentId: string): Promise<boolean> {
+		console.log('START deleteTournamentUseCase ::', tournamentId)
 
 		try {
-			const torunamentExist = await this.tournamentService.findOne(userId)
-			console.log('deleteTournamentUseCase :: findOne ::', torunamentExist)
+			await this.checkIfTournamentNotExist(tournamentId)
 
-			if (!torunamentExist) {
-				console.log('deleteTournamentUseCase :: error ::', tournamentNotFound)
-
-				throw tournamentNotFound.message
-			}
-
-			const response = await this.tournamentService.delete(userId)
+			const response = await this.tournamentService.delete(tournamentId)
 			console.log('deleteTournamentUseCase :: delete ::', response)
 
 			console.log('FINISH deleteTournamentUseCase')
@@ -27,5 +20,18 @@ export class deleteTournamentUseCase {
 
 			throw error
 		}
+	}
+
+	private async checkIfTournamentNotExist(tournamentId: string): Promise<boolean> {
+		const torunamentExist = await this.tournamentService.findOne(tournamentId)
+		console.log('deleteTournamentUseCase :: findOne ::', torunamentExist)
+
+		if (!torunamentExist) {
+			console.log('deleteTournamentUseCase :: error ::', tournamentNotFound)
+
+			throw tournamentNotFound.message
+		}
+
+		return true
 	}
 }

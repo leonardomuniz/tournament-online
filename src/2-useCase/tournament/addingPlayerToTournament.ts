@@ -12,11 +12,11 @@ export class AddingPlayerToTournament {
 	) {}
 
 	async run(tournamentId: string, userId: string): Promise<boolean> {
-		console.log('START AddingPlayerToTournament ::', tournamentId, userId)
+		console.log('START AddingPlayerToTournament ::', { tournamentId, userId })
 
 		try {
-			const tournament = await this.verifyTournament(tournamentId)
-			const player = await this.verifyPlayer(userId)
+			const tournament = await this.getTournamentInfo(tournamentId)
+			const player = await this.getPlayerInfo(userId)
 
 			const normalizedData = await this.normalizedPlayersList(tournament, player)
 			console.log('AddingPlayerToTournament :: normalizedPlayersList :: response ::', normalizedData)
@@ -31,7 +31,7 @@ export class AddingPlayerToTournament {
 		}
 	}
 
-	private async verifyTournament(tournamentId: string): Promise<TournamentDto> {
+	private async getTournamentInfo(tournamentId: string): Promise<TournamentDto> {
 		const tournamentExist = await this.tournamentService.findOne(tournamentId)
 		console.log('AddingPlayerToTournament :: tournamentService :: findOne ::', tournamentExist)
 
@@ -44,7 +44,7 @@ export class AddingPlayerToTournament {
 		return tournamentExist
 	}
 
-	private async verifyPlayer(userId: string): Promise<UserDto> {
+	private async getPlayerInfo(userId: string): Promise<UserDto> {
 		const userExist = await this.userService.findOne(userId)
 
 		if (!userExist) {

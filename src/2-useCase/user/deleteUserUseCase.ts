@@ -8,14 +8,7 @@ export class deleteUserUseCase {
 		console.log('START deleteUserUseCase ::', userId)
 
 		try {
-			const userExist = await this.userService.findOne(userId)
-			console.log('deleteUserUseCase :: findOne ::', userExist)
-
-			if (!userExist) {
-				console.log('deleteUserUseCase :: error ::', userNotFound)
-
-				throw userNotFound.message
-			}
+			await this.checkIfUserNotExist(userId)
 
 			const response = await this.userService.delete(userId)
 			console.log('deleteUserUseCase :: delete ::', response)
@@ -27,5 +20,18 @@ export class deleteUserUseCase {
 
 			throw error
 		}
+	}
+
+	private async checkIfUserNotExist(userId: string): Promise<boolean> {
+		const userExist = await this.userService.findOne(userId)
+		console.log('deleteUserUseCase :: findOne ::', userExist)
+
+		if (!userExist) {
+			console.log('deleteUserUseCase :: error ::', userNotFound)
+
+			throw userNotFound.message
+		}
+
+		return true
 	}
 }

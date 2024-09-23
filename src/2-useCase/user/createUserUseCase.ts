@@ -7,16 +7,10 @@ export class CreateUserUseCase {
 
 	async run(input: UserDto): Promise<boolean> {
 		console.log('START CreateUserUseCase ::', input)
+		const { email } = input
 
 		try {
-			const userExist = await this.userService.findByEmail(input.email)
-			console.log('CreateUserUseCase :: findByEmail ::', userExist)
-
-			if (userExist) {
-				console.log('CreateUserUseCase :: error ::', userAlredyExist)
-
-				throw userAlredyExist.message
-			}
+			await this.checkIfUserExist(email)
 
 			const response = await this.userService.create(input)
 			console.log('CreateUserUseCase :: create ::', response)
@@ -28,5 +22,17 @@ export class CreateUserUseCase {
 
 			throw error
 		}
+	}
+	private async checkIfUserExist(email: string): Promise<boolean> {
+		const userExist = await this.userService.findByEmail(email)
+		console.log('CreateUserUseCase :: findByEmail ::', userExist)
+
+		if (userExist) {
+			console.log('CreateUserUseCase :: error ::', userAlredyExist)
+
+			throw userAlredyExist.message
+		}
+
+		return true
 	}
 }

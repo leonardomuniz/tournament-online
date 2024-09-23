@@ -2,7 +2,6 @@ import Router, { type Request, type Response } from 'express'
 import { CreateUserUseCase } from '../../2-useCase/user/createUserUseCase'
 import { deleteUserUseCase } from '../../2-useCase/user/deleteUserUseCase'
 import { findAllUserUseCase } from '../../2-useCase/user/findAllUserUseCase'
-import { findByEmailUserUseCase } from '../../2-useCase/user/findByEmailUserUseCase'
 import { findOneUserUseCase } from '../../2-useCase/user/findOneUserUseCase'
 import { UpdateUserUseCase } from '../../2-useCase/user/updateUserUseCase'
 import { UserService } from '../services/userService'
@@ -16,7 +15,6 @@ const findAllUser = new findAllUserUseCase(service)
 const findOneUser = new findOneUserUseCase(service)
 const updateUser = new UpdateUserUseCase(service)
 const deleteUser = new deleteUserUseCase(service)
-const findUserByEmail = new findByEmailUserUseCase(service)
 
 userRouter.post('/', async (request: Request, response: Response): Promise<Response> => {
 	try {
@@ -48,8 +46,4 @@ userRouter.delete('/:userId', async (request: Request, response: Response): Prom
 	} catch (error) {
 		return response.status(400).json({ message: error })
 	}
-})
-
-userRouter.get('/:email', async (request: Request, response: Response): Promise<Response> => {
-	return response.status(200).json(await findUserByEmail.run(request.params.email))
 })

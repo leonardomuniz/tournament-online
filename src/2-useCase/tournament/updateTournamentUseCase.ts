@@ -9,14 +9,7 @@ export class UpdateTournamentUseCase {
 		console.log('START UpdateTournamentUseCase ::', input)
 
 		try {
-			const tournamentExist = await this.tournamentService.findOne(tournamentId)
-			console.log('UpdateTournamentUseCase :: findOne ::', tournamentExist)
-
-			if (!tournamentExist) {
-				console.log('UpdateTournamentUseCase :: error ::', tournamentNotFound)
-
-				throw tournamentNotFound.message
-			}
+			await this.checkIfTournamentNotExist(tournamentId)
 
 			const response = await this.tournamentService.update(tournamentId, input)
 			console.log('UpdateTournamentUseCase :: update ::', response)
@@ -28,5 +21,18 @@ export class UpdateTournamentUseCase {
 
 			throw error
 		}
+	}
+
+	private async checkIfTournamentNotExist(tournamentId: string): Promise<boolean> {
+		const tournamentExist = await this.tournamentService.findOne(tournamentId)
+		console.log('UpdateTournamentUseCase :: findOne ::', tournamentExist)
+
+		if (!tournamentExist) {
+			console.log('UpdateTournamentUseCase :: error ::', tournamentNotFound)
+
+			throw tournamentNotFound.message
+		}
+
+		return true
 	}
 }

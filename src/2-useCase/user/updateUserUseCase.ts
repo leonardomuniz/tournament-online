@@ -7,16 +7,10 @@ export class UpdateUserUseCase {
 
 	async run(userId: string, input: UserDto): Promise<boolean> {
 		console.log('START UpdateUserUseCase ::', input)
+		const { email } = input
 
 		try {
-			const userExist = await this.userService.findByEmail(input.email)
-			console.log('UpdateUserUseCase :: findByEmail ::', userExist)
-
-			if (!userExist) {
-				console.log('UpdateUserUseCase :: error ::', userNotFound)
-
-				throw userNotFound.message
-			}
+			await this.checkIfUserNotExist(email)
 
 			const response = await this.userService.update(userId, input)
 			console.log('UpdateUserUseCase :: update ::', response)
@@ -28,5 +22,18 @@ export class UpdateUserUseCase {
 
 			throw error
 		}
+	}
+
+	private async checkIfUserNotExist(email: string): Promise<boolean> {
+		const userExist = await this.userService.findByEmail(email)
+		console.log('UpdateUserUseCase :: findByEmail ::', userExist)
+
+		if (!userExist) {
+			console.log('UpdateUserUseCase :: error ::', userNotFound)
+
+			throw userNotFound.message
+		}
+
+		return true
 	}
 }
