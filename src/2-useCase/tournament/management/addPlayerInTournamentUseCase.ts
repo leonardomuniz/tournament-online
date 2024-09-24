@@ -83,9 +83,10 @@ export class AddPlayerInTournamentUseCase {
 
 		const playerIndex = playersList.findIndex((player) => player.player.id === userId)
 		// biome-ignore lint/complexity/noUselessTernary: <explanation>
-		const findPlayer = playerIndex >= 1 ? true : false
+		const isPlayerInTournament = playerIndex >= 1 ? true : false
+		console.log('AddPlayerInTournamentUseCase :: checkIfPlayerIsInTheTournament :: ', isPlayerInTournament)
 
-		if (findPlayer) {
+		if (isPlayerInTournament) {
 			console.log('AddPlayerInTournamentUseCase :: error ::', playerHasAlreadyBeenRegistered)
 
 			throw playerHasAlreadyBeenRegistered.message

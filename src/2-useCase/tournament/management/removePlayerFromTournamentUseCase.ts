@@ -1,5 +1,4 @@
 import type { TournamentDto } from '../../../1-entity/dto/tournamentDto'
-import type { UserDto } from '../../../1-entity/dto/userDto'
 import { tournamentNotFound } from '../../../1-entity/errors/tournament'
 import { userNotFound } from '../../../1-entity/errors/user'
 import type { iTournamentInterface } from '../../../1-entity/interfaces/iTournamentService'
@@ -15,7 +14,9 @@ export class RemovePlayerFromTournamentUseCase {
 		console.log('START RemovePlayerFromTournamentUseCase ::', { tournamentId, userId })
 
 		try {
-			const player = await this.getPlayerInfo(userId)
+			const player = await this.checkIfPlayerExist(userId)
+			console.log('RemovePlayerFromTournamentUseCase :: checkIfPlayerExist :: ', player)
+
 			const tournament = await this.getTournamentInfo(tournamentId)
 			const playerIndex = this.checkIfPlayerIsInTheTournament(userId, tournament)
 
@@ -32,7 +33,8 @@ export class RemovePlayerFromTournamentUseCase {
 		}
 	}
 
-	private async getPlayerInfo(userId: string): Promise<UserDto> {
+	private async checkIfPlayerExist(userId: string): Promise<boolean> {
+		console.log('RemovePlayerFromTournamentUseCase :: checkIfPlayerExist :: input::', userId)
 		const userExist = await this.userService.findOne(userId)
 
 		if (!userExist) {
@@ -41,7 +43,7 @@ export class RemovePlayerFromTournamentUseCase {
 			throw userNotFound.message
 		}
 
-		return userExist
+		return true
 	}
 
 	private async getTournamentInfo(tournamentId: string): Promise<TournamentDto> {
@@ -71,9 +73,10 @@ export class RemovePlayerFromTournamentUseCase {
 		const playersList = tournament.players
 		const playerIndex = playersList.findIndex((player) => player.player.id === userId)
 		// biome-ignore lint/complexity/noUselessTernary: <explanation>
-		const findPlayer = playerIndex >= 1 ? true : false
+		const isPlayerInTournament = playerIndex >= 1 ? true : false
+		console.log('RemovePlayerFromTournamentUseCase :: checkIfPlayerIsInTheTournament :: ', isPlayerInTournament)
 
-		if (!findPlayer) {
+		if (!isPlayerInTournament) {
 			console.log('RemovePlayerFromTournamentUseCase :: error ::', userNotFound)
 
 			throw userNotFound.message
