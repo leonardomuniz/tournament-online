@@ -1,9 +1,10 @@
 import Router, { type Request, type Response } from 'express'
-import { AddingPlayerToTournament } from '../../2-useCase/tournament/addingPlayerToTournament'
 import { CreateTournamentUseCase } from '../../2-useCase/tournament/createTournamentUseCase'
 import { deleteTournamentUseCase } from '../../2-useCase/tournament/deleteTournamentUseCase'
 import { findAllTournamentUseCase } from '../../2-useCase/tournament/findAllTournamentUseCase'
 import { findOneTournamentUseCase } from '../../2-useCase/tournament/findOneTournamentUseCase'
+import { AddPlayerInTournamentUseCase } from '../../2-useCase/tournament/management/addPlayerInTournament'
+import { RemovePlayerFromTournamentUseCase } from '../../2-useCase/tournament/management/removePlayerFromTournament'
 import { UpdateTournamentUseCase } from '../../2-useCase/tournament/updateTournamentUseCase'
 import { TournamentService } from '../services/tournamentService'
 import { UserService } from '../services/userService'
@@ -18,7 +19,8 @@ const findAllTournament = new findAllTournamentUseCase(tournamentService)
 const findOneTournament = new findOneTournamentUseCase(tournamentService)
 const updateTournament = new UpdateTournamentUseCase(tournamentService)
 const deleteTournament = new deleteTournamentUseCase(tournamentService)
-const addingPlayerToTournament = new AddingPlayerToTournament(tournamentService, userService)
+const addingPlayerToTournament = new AddPlayerInTournamentUseCase(tournamentService, userService)
+const removePlayerFromTournament = new RemovePlayerFromTournamentUseCase(tournamentService, userService)
 
 tournamentRouter.post('/', async (request: Request, response: Response): Promise<Response> => {
 	try {
@@ -52,9 +54,17 @@ tournamentRouter.delete('/:tournamentId', async (request: Request, response: Res
 	}
 })
 
-tournamentRouter.put('/:tournamentId/user/:userId', async (request: Request, response: Response): Promise<Response> => {
+tournamentRouter.put('/:tournamentId/addUser/:userId', async (request: Request, response: Response): Promise<Response> => {
 	try {
 		return response.status(200).json(await addingPlayerToTournament.run(request.params.tournamentId, request.params.userId))
+	} catch (error) {
+		return response.status(400).json({ message: error })
+	}
+})
+
+tournamentRouter.put('/:tournamentId/removeUser/:userId', async (request: Request, response: Response): Promise<Response> => {
+	try {
+		return response.status(200).json(await removePlayerFromTournament.run(request.params.tournamentId, request.params.userId))
 	} catch (error) {
 		return response.status(400).json({ message: error })
 	}

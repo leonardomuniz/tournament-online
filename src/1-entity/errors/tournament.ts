@@ -17,3 +17,8 @@ export const tournamentNeedsOwner = {
 	code: 'TRN-004',
 	message: 'Tournament need an owner to be created'
 }
+
+export const playerHasAlreadyBeenRegistered = {
+	code: 'TRN-005',
+	message: 'The player has already been registered'
+}
