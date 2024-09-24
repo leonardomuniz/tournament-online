@@ -22,7 +22,7 @@ export class ConfirmPlayerInTournamentUseCase {
 			const normalizedData = this.normalizedPlayersList(tournament, userId)
 			console.log('ConfirmPlayerInTournamentUseCase :: normalizedPlayersList :: response ::', normalizedData.players)
 
-			//await this.tournamentService.update(tournamentId, normalizedData)
+			await this.tournamentService.update(tournamentId, normalizedData)
 			console.log('FINISH ConfirmPlayerInTournamentUseCase')
 			return true
 		} catch (error) {
@@ -65,20 +65,12 @@ export class ConfirmPlayerInTournamentUseCase {
 		const playerIndex = this.checkIfPlayerIsInTheTournament(userId, playersList)
 		console.log('ConfirmPlayerInTournamentUseCase :: checkIfPlayerIsInTheTournament :: playerIndex ::', playerIndex)
 
-		const playerRemoved = playersList.splice(playerIndex, 1)
-		console.log('ConfirmPlayerInTournamentUseCase :: remove duplicate ::', playerRemoved)
+		// biome-ignore lint/complexity/noUselessTernary: <explanation>
+		playersList[playerIndex].confirmed !== true ? true : false
 
-		const confirmedPlayer = {
-			...playersList[playerIndex],
-			confirmed: true
-		}
+		console.log('ConfirmPlayerInTournamentUseCase :: checkIfPlayerIsInTheTournament :: player confirmed ::', playersList[playerIndex])
 
-		console.log('ConfirmPlayerInTournamentUseCase :: confirmed player ::', confirmedPlayer)
-
-		return {
-			...tournament,
-			players: [...playersList, confirmedPlayer]
-		}
+		return tournament
 	}
 
 	private checkIfPlayerIsInTheTournament(userId: string, playersList: TournamentPlayers[]): number {
